@@ -1,11 +1,14 @@
 <?php
-class Database{
+class Database 
+{
     private $__connection;
+    //Kết nối database
     function __construct() {
         global $db_config;
         $this->__connection = Connection::getInstance($db_config);
     }
 
+    //Thêm dữ liệu
     function insert($table,$data) {
         if(!empty($data)) {
             $fieldStr = '';
@@ -25,6 +28,7 @@ class Database{
         return false;
     }
 
+    //Sửa dữ liệu
     function update($table,$data,$condition="") {
         if(!empty($data)) {
             $updateStr = '';
@@ -46,6 +50,7 @@ class Database{
         }
     }
 
+    //Xoá dữ liệu
     function delete($table,$condition="") {
         if(!empty($table)) {
             if(!empty($condition)) {
@@ -60,6 +65,7 @@ class Database{
         }
     }
 
+    //Truy vấn câu lệnh SQL
     function query($sql) {
 
         try {
@@ -67,13 +73,15 @@ class Database{
             $statement->execute();
             return $statement;
         } catch (Exception $exception) {
-            $message = $exception->getMessage();
-            $data['message'] = $message;
-            App::$app->loadError('database',$data);die;
+            $mess = $exception->getMessage();
+            $data['message'] = $mess;
+            App::$app->loadError('database', $data);
+            die();
         }
        
     }
 
+    //Trả về id mới nhất sau khi đã insert
     function lastInsertId() {
         return $this->__connection->lastInsertId();
     }

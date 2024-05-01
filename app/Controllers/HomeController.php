@@ -1,5 +1,6 @@
 <?php 
-class HomeController extends Controller {
+class HomeController extends Controller 
+{
     public $user;
 
     public function __construct() {
@@ -7,14 +8,16 @@ class HomeController extends Controller {
     }
 
     function index() {
-        $listUsers = $this->user->gitList();
+        $listUsers = $this->user->all();
         $data['content'] = 'Home/index';
         $data['subContent']['title'] = 'home page';
         $data['subContent']['listUsers'] = $listUsers;
         $this->render('Layouts/clientLayout',$data);
     }
 
-    function detail($id='') {
+    function detail() {
+        $id = $_GET['id'];
         echo 'id : '.$id;
     }
+
 }

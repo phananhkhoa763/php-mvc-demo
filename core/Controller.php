@@ -14,7 +14,7 @@ class Controller{
     }
 
     public function render($view,$data=[]) {
-        extract($data);
+        extract($data);// chuyển key thành biến
         $fileView = _DIR_ROOT.'/app/Views/'.$view.'.php';
         if(file_exists($fileView)) {
             require_once $fileView;

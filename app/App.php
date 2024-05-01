@@ -44,12 +44,14 @@ class App {
             $urlArray = array_values($urlArray);
         }
 
+        //Xử lý controller
         if(!empty($urlArray[0])) {
             $this->_controller = ucfirst($urlArray[0]).'Controller';
         }else {
             $this->_controller = ucfirst($this->_controller).'Controller';
         }
-
+        
+        //Xử lý khi $urlCheck rỗng
         if(empty($checkUrl)) {
             $checkUrl = $this->_controller;
         }
@@ -84,7 +86,7 @@ class App {
     }
 
     public function loadError($name='404',$data = []) {
-            extract($data);
-            require_once 'Errors/'.$name.'.php';    
+        extract($data);
+        require_once 'Errors/'.$name.'.php';    
     }
 }
