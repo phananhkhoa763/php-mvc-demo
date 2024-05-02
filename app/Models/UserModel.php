@@ -19,8 +19,13 @@ class UserModel extends Model
         return 'id';
     }
 
-    public function gitList() {
+    public function getList() {
         $data = $this->db->query("SELECT * FROM $this->_table limit 10")->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
+
+    public function getID($id) {
+        $data = $this->db->select()->table('users')->where('id','=',$id)->get();
         return $data;
     }
 }

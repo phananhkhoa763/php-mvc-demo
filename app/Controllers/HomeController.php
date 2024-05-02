@@ -8,7 +8,9 @@ class HomeController extends Controller
     }
 
     function index() {
-        $listUsers = $this->user->all();
+        $listUsers = $this->user->getID(1);
+        echo '<pre>';
+        var_dump($listUsers);die;
         $data['content'] = 'Home/index';
         $data['subContent']['title'] = 'home page';
         $data['subContent']['listUsers'] = $listUsers;
