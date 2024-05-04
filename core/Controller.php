@@ -1,6 +1,7 @@
 <?php 
-class Controller{
-
+class Controller
+{
+    public $db;
     public function model($model) {
         $fileModel = _DIR_ROOT.'/app/Models/'.$model.'.php';
         if(file_exists($fileModel)) {

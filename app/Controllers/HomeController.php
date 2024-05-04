@@ -8,7 +8,7 @@ class HomeController extends Controller
     }
 
     function index() {
-        $listUsers = $this->user->getID(1);
+        $listUsers = $this->db->select()->table('suggestions')->limit(1)->get();
         echo '<pre>';
         var_dump($listUsers);die;
         $data['content'] = 'Home/index';

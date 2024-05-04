@@ -1,6 +1,6 @@
 <?php 
 class App {
-    private $_controller,$_action,$_params,$_route;//avoid the same name
+    private $_controller,$_action,$_params,$_route,$__db;
     static public $app;
     function __construct() {
         global $routes;
@@ -12,6 +12,11 @@ class App {
 
         $this->_action = 'index';
         $this->_params = [];
+        if (class_exists('DB')) {
+            $dbObject = new DB();
+            $this->__db = $dbObject->db;
+        }
+
         $this->handleUrl();
     }
 
@@ -63,6 +68,9 @@ class App {
             if(class_exists($this->_controller)) {
                 $this->_controller = new $this->_controller();
                 unset($urlArray[0]);
+                if (!empty($this->__db)) {
+                    $this->_controller->db = $this->__db;
+                }
             }else {
                 $this->loadError();
             }
