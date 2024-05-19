@@ -1,6 +1,6 @@
 <?php 
 class App {
-    private $_controller,$_action,$_params,$_route,$__db;
+    private $_controller,$_action,$_params,$_route,$_db;
     static public $app;
     function __construct() {
         global $routes;
@@ -14,7 +14,7 @@ class App {
         $this->_params = [];
         if (class_exists('DB')) {
             $dbObject = new DB();
-            $this->__db = $dbObject->db;
+            $this->_db = $dbObject->db;
         }
 
         $this->handleUrl();
@@ -22,10 +22,12 @@ class App {
 
     function getUrl() {
         if(!empty($_SERVER['REQUEST_URI'])) {
-            $url =$_SERVER['REQUEST_URI'];
+            $url = $_SERVER['REQUEST_URI'];
+            $url = explode('?', $url)[0];
         }else {
             $url = '/';
         }
+
         return $url;
     }
     
@@ -60,7 +62,7 @@ class App {
         if(empty($checkUrl)) {
             $checkUrl = $this->_controller;
         }
-
+        
         $fileController = 'Controllers/'.$checkUrl.'.php';
         if(file_exists('app/'.$fileController)) {
             require_once $fileController;
@@ -68,8 +70,8 @@ class App {
             if(class_exists($this->_controller)) {
                 $this->_controller = new $this->_controller();
                 unset($urlArray[0]);
-                if (!empty($this->__db)) {
-                    $this->_controller->db = $this->__db;
+                if (!empty($this->_db)) {
+                    $this->_controller->db = $this->_db;
                 }
             }else {
                 $this->loadError();
@@ -78,7 +80,7 @@ class App {
         }else {
             $this->loadError();
         }
-
+       
         if(!empty($urlArray[1])) {
             $this->_action = $urlArray[1];
             unset($urlArray[1]);
@@ -91,6 +93,10 @@ class App {
             $this->loadError();
         }
         
+    }
+
+    public function getCurrentController(){
+        return $this->_controller;
     }
 
     public function loadError($name='404',$data = []) {

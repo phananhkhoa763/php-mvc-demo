@@ -1,5 +1,6 @@
 <?php 
-abstract class Model extends Database {
+abstract class Model extends Database 
+{
     protected $db;
 
     function __construct() {
